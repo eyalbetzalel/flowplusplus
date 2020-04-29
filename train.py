@@ -30,21 +30,58 @@ def main(args):
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
 
-    # No normalization applied, since model expects inputs in (0, 1)
-    transform_train = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor()
-    ])
+    # # No normalization applied, since model expects inputs in (0, 1)
+    # transform_train = transforms.Compose([
+    #     # transforms.RandomHorizontalFlip(),
+    #     transforms.ToTensor()
+    # ])
+    #
+    # transform_test = transforms.Compose([
+    #     transforms.ToTensor()
+    # ])
+    #
+    # trainset = torchvision.datasets.CIFAR10(root='data', train=True, download=True, transform=transform_train)
+    # trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
+    #
+    # testset = torchvision.datasets.CIFAR10(root='data', train=False, download=True, transform=transform_test)
+    # testloader = data.DataLoader(testset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
 
-    transform_test = transforms.Compose([
-        transforms.ToTensor()
-    ])
+    ################################################################
 
-    trainset = torchvision.datasets.CIFAR10(root='data', train=True, download=True, transform=transform_train)
+    # Load CelebA instead of CIFAR10 :
+
+    image_size = 32
+    batch_size = 32
+    workers = 4
+
+    transforms_celeb = transforms.Compose([
+                                   transforms.Resize(image_size),
+                                   transforms.CenterCrop(image_size),
+                                   transforms.ToTensor()
+                               ])
+
+    dataroot_train = r"data/train"
+    dataroot_test = r"data/validation"
+
+    trainset = torchvision.datasets.ImageFolder(root=dataroot_train, transform=transforms_celeb)
     trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
-
-    testset = torchvision.datasets.CIFAR10(root='data', train=False, download=True, transform=transform_test)
+    testset = torchvision.datasets.ImageFolder(root=dataroot_test, transform=transforms_celeb)
     testloader = data.DataLoader(testset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
+
+    import matplotlib.pyplot as plt
+
+    def imshow(img):
+        img = img / 2 + 0.5
+        npimg = img.numpy()
+        plt.imshow(np.transpose(npimg, (1, 2, 0)))
+        plt.show()
+
+    dataiter = iter(trainloader)
+    images = dataiter.next()
+
+    # show images
+    # print(images[0])
+    imshow(torchvision.utils.make_grid(images[0]))
 
     # Model
     print('Building model..')
