@@ -72,4 +72,4 @@ def img_train_test_split(img_source_dir, train_size):
         print('Copied ' + str(train_counter) + ' images to data/train/' + subdir)
         print('Copied ' + str(validation_counter) + ' images to data/validation/' + subdir)
         
-img_train_test_split(r"C:\Users\eyalb\Desktop\Master\Generative Models\flowpp2\flowplusplus\data3\celeba", 0.7)
+img_train_test_split("/home/dsi/eyalbetzalel/flowpp/img_align_celeba", 0.7)
