@@ -23,7 +23,7 @@ def main(args):
     # Set up main device and scale batch size
     device = 'cuda' if torch.cuda.is_available() and args.gpu_ids else 'cpu'
     args.batch_size *= max(1, len(args.gpu_ids))
-
+    torch.autograd.set_detect_anomaly(True)
     # Set random seeds
     random.seed(args.seed)
     np.random.seed(args.seed)
