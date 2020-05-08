@@ -71,3 +71,5 @@ def img_train_test_split(img_source_dir, train_size):
 
         print('Copied ' + str(train_counter) + ' images to data/train/' + subdir)
         print('Copied ' + str(validation_counter) + ' images to data/validation/' + subdir)
+        
+img_train_test_split("/home/dsi/eyalbetzalel/flowpp/celeba", 0.7)
