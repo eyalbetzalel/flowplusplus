@@ -61,7 +61,7 @@ def checkerboard(x, reverse=False):
         y, z = (t.contiguous().view(b, c, h * w // 2) for t in x)
         x = torch.zeros(b, c, h * w, dtype=y.dtype, device=y.device)
         x[:, :, y_idx] += y
-        x[:, :, z_idx] += z
+        x[:, :, z_idx] += z.clone()
         x = x.view(b, c, h, w)
 
         return x
