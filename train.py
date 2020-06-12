@@ -1,4 +1,4 @@
-"""Train Flow++ on CIFAR-10.
+"""Train Flow++ on ImageNet64
 
 Train script adapted from: https://github.com/kuangliu/pytorch-cifar/
 """
@@ -50,8 +50,8 @@ def main(args):
 
     # Load CelebA instead of CIFAR10 :
 
-    image_size = 32
-    batch_size = 32
+    image_size = 64
+    batch_size = 16
     workers = 4
 
     transforms_celeb = transforms.Compose([
@@ -60,8 +60,8 @@ def main(args):
                                    transforms.ToTensor()
                                ])
 
-    dataroot_train = r"data/train"
-    dataroot_test = r"data/validation"
+    dataroot_train = r"./test_data/train_64x64"
+    dataroot_test = r"./test_data/empty"
 
     trainset = torchvision.datasets.ImageFolder(root=dataroot_train, transform=transforms_celeb)
     trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
