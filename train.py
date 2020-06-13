@@ -52,7 +52,7 @@ def main(args):
 
     # Load CelebA instead of CIFAR10 :
 
-    image_size = 28
+    image_size = 32
     batch_size = 16
     workers = 4
 
