@@ -93,7 +93,7 @@ def main(args):
     # Model
     print('Building model..')
     net = FlowPlusPlus(scales=[(0, 4), (2, 3)],
-                       in_shape=(3, 32, 32),
+                       in_shape=(1, 32, 32),
                        mid_channels=args.num_channels,
                        num_blocks=args.num_blocks,
                        num_dequant_blocks=args.num_dequant_blocks,
@@ -165,7 +165,7 @@ def sample(net, batch_size, device):
         batch_size (int): Number of samples to generate.
         device (torch.device): Device to use.
     """
-    z = torch.randn((batch_size, 3, 32, 32), dtype=torch.float32, device=device)
+    z = torch.randn((batch_size, 1, 32, 32), dtype=torch.float32, device=device)
     x, _ = net(z, reverse=True)
     x = torch.sigmoid(x)
 
