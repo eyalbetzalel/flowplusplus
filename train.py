@@ -14,6 +14,8 @@ import torch.utils.data as data
 import torchvision
 import torchvision.transforms as transforms
 import util
+import torchvision.datasets as datasets
+
 
 from models import FlowPlusPlus
 from tqdm import tqdm
@@ -50,7 +52,7 @@ def main(args):
 
     # Load CelebA instead of CIFAR10 :
 
-    image_size = 64
+    image_size = 28
     batch_size = 16
     workers = 4
 
@@ -60,12 +62,17 @@ def main(args):
                                    transforms.ToTensor()
                                ])
 
-    dataroot_train = r"./data/train"
-    dataroot_test = r"./data/validation"
+#    dataroot_train = r"./data/train"
+#    dataroot_test = r"./data/validation"
 
-    trainset = torchvision.datasets.ImageFolder(root=dataroot_train, transform=transforms_celeb)
+#    trainset = torchvision.datasets.ImageFolder(root=dataroot_train, transform=transforms_celeb)
+#    trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
+#    testset = torchvision.datasets.ImageFolder(root=dataroot_test, transform=transforms_celeb)
+#    testloader = data.DataLoader(testset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
+
+    trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transforms_celeb)
     trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
-    testset = torchvision.datasets.ImageFolder(root=dataroot_test, transform=transforms_celeb)
+    testset = datasets.MNIST(root='./data', train=False, download=True, transform=transforms_celeb)
     testloader = data.DataLoader(testset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
 
     import matplotlib.pyplot as plt
