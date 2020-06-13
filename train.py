@@ -60,8 +60,8 @@ def main(args):
                                    transforms.ToTensor()
                                ])
 
-    dataroot_train = r"./test_data/train_64x64"
-    dataroot_test = r"./test_data/empty"
+    dataroot_train = r"./data/train"
+    dataroot_test = r"./data/validation"
 
     trainset = torchvision.datasets.ImageFolder(root=dataroot_train, transform=transforms_celeb)
     trainloader = data.DataLoader(trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
